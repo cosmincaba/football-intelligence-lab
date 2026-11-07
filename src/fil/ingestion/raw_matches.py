@@ -10,6 +10,11 @@ def upsert_raw_match(
     source_file_path: str,
     raw_bytes: bytes,       
 ) -> str:
+    """Insert, update, or skip a raw match JSON document.
+
+    Returns 'inserted', 'updated', or 'skipped'.
+    The caller owns the transaction.
+    """
 
     # 1. Calculate SHA-256 from the original bytes
     content_hash = sha256_of_bytes(raw_bytes)
@@ -36,7 +41,7 @@ def upsert_raw_match(
             updated_at = NOW()
         WHERE raw.matches_json.content_hash
               IS DISTINCT FROM EXCLUDED.content_hash
-        RETURNING id;
+        RETURNING (xmax = 0) AS was_inserted;
     """
 
     with conn.cursor() as cur:
@@ -54,4 +59,7 @@ def upsert_raw_match(
     if result is None:
         return "skipped"
 
-    return "inserted_or_updated"
+    if result[0]:
+        return "inserted"
+
+    return "updated"
