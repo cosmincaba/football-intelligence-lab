@@ -226,3 +226,11 @@ data/
 
 # Exploratory Jupyter notebooks
 notebooks/
+
+# dbt generated files
+**/target/
+**/logs/
+**/dbt_packages/
+
+# dbt local connection credentials
+**/profiles.yml

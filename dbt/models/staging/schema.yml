@@ -1,0 +1,49 @@
+
+version: 2
+
+models:
+  - name: stg_matches
+    description: "Structured StatsBomb match metadata."
+
+    columns:
+      - name: match_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: source_file_path
+        data_tests:
+          - not_null
+
+      - name: home_team_id
+        data_tests:
+          - not_null
+
+      - name: away_team_id
+        data_tests:
+          - not_null
+
+  - name: stg_events
+    description: "One row per StatsBomb match event."
+
+    columns:
+      - name: event_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: match_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_matches')
+                field: match_id
+
+      - name: event_index
+        data_tests:
+          - not_null
+
+      - name: event_type_id
+        data_tests:
+          - not_null
