@@ -1,0 +1,11 @@
+# Ingestion
+psycopg[binary]==3.3.6
+requests==2.34.2
+python-dotenv==1.2.4
+
+# Transformation
+dbt-core==1.12.7
+dbt-postgres==1.11.0
+
+# Testing
+pytest==9.2.0
