@@ -38,3 +38,13 @@ models:
           - accepted_values:
               arguments:
                 values: ['home_win', 'away_win', 'draw']
+  - name: dim_player
+    description: "One row per player seen in events."
+    columns:
+      - name: player_id
+        data_tests:
+          - unique
+          - not_null
+      - name: player_name
+        data_tests:
+          - not_null  
