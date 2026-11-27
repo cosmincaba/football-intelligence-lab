@@ -1,3 +1,5 @@
+{{ config(materialized='table') }}
+
 SELECT
     event_id,
     match_id,
