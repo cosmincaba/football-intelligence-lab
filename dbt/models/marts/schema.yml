@@ -75,3 +75,24 @@ models:
               arguments:
                 to: ref('dim_player')
                 field: player_id
+  - name: fct_shots
+    description: "One row per shot."
+    columns:
+      - name: event_id
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_events')
+                field: event_id
+      - name: match_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_match')
+                field: match_id
+      - name: shot_outcome
+        data_tests:
+          - not_null
