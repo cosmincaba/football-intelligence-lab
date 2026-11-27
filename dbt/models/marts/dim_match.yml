@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: dim_match
+    description: "One row per match. Describes when it was played, who played and the final score."
+
+    columns:
+      - name: match_id
+        description: "StatsBomb match id. Primary key."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: home_team_id
+        description: "Home team. Joins to dim_team.team_id."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_team')
+                field: team_id
+
+      - name: away_team_id
+        description: "Away team. Joins to dim_team.team_id."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_team')
+                field: team_id
+
+      - name: match_result
+        description: "'home_win', 'away_win' or 'draw', worked out from the final score."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['home_win', 'away_win', 'draw']
