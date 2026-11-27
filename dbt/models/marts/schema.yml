@@ -48,3 +48,30 @@ models:
       - name: player_name
         data_tests:
           - not_null  
+  - name: fct_events
+    description: "One row per event."
+    columns:
+      - name: event_id
+        data_tests:
+          - unique
+          - not_null
+      - name: match_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_match')
+                field: match_id
+      - name: team_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_team')
+                field: team_id
+      - name: player_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_player')
+                field: player_id
